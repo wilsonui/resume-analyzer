@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Analysis Results — ResumeIQ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0a0f; --surface: #12121a; --surface2: #1a1a26; --border: #2a2a3e;
+  --accent: #6c63ff; --accent2: #ff6b9d; --accent3: #00d9c8;
+  --text: #e8e8f0; --muted: #6b6b8a;
+  --success: #22c55e; --warning: #f59e0b; --danger: #ef4444;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+
+.container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+
+/* Nav */
+nav {
+  padding: 20px 0; display: flex; align-items: center; justify-content: space-between;
+  border-bottom: 1px solid var(--border);
+}
+.logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.4rem;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.logo span { -webkit-text-fill-color: var(--accent3); }
+.nav-actions { display: flex; gap: 12px; align-items: center; }
+.btn-ghost {
+  background: transparent; border: 1px solid var(--border);
+  color: var(--muted); padding: 8px 16px; border-radius: 8px;
+  font-family: 'DM Sans', sans-serif; font-size: 0.85rem; cursor: pointer;
+  text-decoration: none; transition: all 0.2s;
+}
+.btn-ghost:hover { border-color: var(--accent); color: var(--text); }
+.btn-primary {
+  background: linear-gradient(135deg, var(--accent), #8b7cf8);
+  border: none; color: white; padding: 8px 18px; border-radius: 8px;
+  font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 500;
+  cursor: pointer; text-decoration: none; transition: all 0.2s;
+}
+.btn-primary:hover { opacity: 0.9; transform: translateY(-1px); }
+
+/* Page header */
+.page-header { padding: 40px 0 32px; }
+.breadcrumb { font-size: 0.8rem; color: var(--muted); margin-bottom: 12px; }
+.breadcrumb a { color: var(--accent); text-decoration: none; }
+.page-title { font-family: 'Syne', sans-serif; font-size: 1.8rem; font-weight: 800; letter-spacing: -0.5px; }
+.page-sub { color: var(--muted); font-size: 0.9rem; margin-top: 6px; }
+
+/* ── ATS Score Hero Card ── */
+.ats-hero {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 20px; padding: 36px; margin-bottom: 28px;
+  display: grid; grid-template-columns: auto 1fr; gap: 40px; align-items: center;
+  animation: fadeIn 0.5s ease;
+}
+@keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+.score-ring { position: relative; width: 140px; height: 140px; flex-shrink: 0; }
+.score-ring svg { transform: rotate(-90deg); }
+.score-ring-bg { fill: none; stroke: var(--surface2); stroke-width: 10; }
+.score-ring-fill { fill: none; stroke-width: 10; stroke-linecap: round;
+  transition: stroke-dashoffset 1.5s cubic-bezier(0.4,0,0.2,1); }
+.score-ring-text {
+  position: absolute; inset: 0; display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+}
+.score-number { font-family: 'Syne', sans-serif; font-size: 2.4rem; font-weight: 800; line-height: 1; }
+.score-label { font-size: 0.7rem; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
+
+.ats-details h2 { font-family: 'Syne', sans-serif; font-size: 1.4rem; font-weight: 700; margin-bottom: 8px; }
+.grade-badge {
+  display: inline-block; padding: 4px 14px; border-radius: 100px;
+  font-family: 'Syne', sans-serif; font-size: 0.9rem; font-weight: 700;
+  margin-bottom: 12px;
+}
+.ats-summary { font-size: 0.9rem; color: var(--muted); line-height: 1.6; margin-bottom: 20px; }
+
+.score-breakdown { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; }
+.score-item {
+  background: var(--surface2); border-radius: 10px; padding: 12px 14px;
+}
+.score-item-label { font-size: 0.72rem; color: var(--muted); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
+.score-item-bar { height: 4px; background: var(--border); border-radius: 2px; overflow: hidden; margin-bottom: 4px; }
+.score-item-fill { height: 100%; border-radius: 2px; transition: width 1s ease 0.5s; }
+.score-item-val { font-size: 0.78rem; font-weight: 600; }
+
+/* ── Two-column layout ── */
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; }
+.one-col { margin-bottom: 20px; }
+
+/* ── Cards ── */
+.card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 16px; padding: 24px;
+  animation: fadeIn 0.5s ease;
+}
+.card-header { display: flex; align-items: center; gap: 10px; margin-bottom: 18px; }
+.card-icon { font-size: 1.2rem; }
+.card-title { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; }
+.card-badge {
+  margin-left: auto; background: var(--surface2); border: 1px solid var(--border);
+  padding: 2px 10px; border-radius: 100px; font-size: 0.72rem; color: var(--muted);
+}
+
+/* Profile */
+.profile-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.profile-item { }
+.profile-key { font-size: 0.72rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 3px; }
+.profile-val { font-size: 0.88rem; font-weight: 500; word-break: break-all; }
+.profile-val.missing { color: var(--muted); font-style: italic; font-weight: 400; }
+
+/* Skills */
+.skill-category { margin-bottom: 16px; }
+.skill-cat-label { font-size: 0.72rem; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+.skill-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.skill-tag {
+  background: rgba(108,99,255,0.1); border: 1px solid rgba(108,99,255,0.25);
+  color: #a8a3ff; padding: 4px 12px; border-radius: 100px; font-size: 0.78rem;
+  font-weight: 500;
+}
+.skill-tag.cat-web { background: rgba(0,217,200,0.08); border-color: rgba(0,217,200,0.25); color: #6ef9f5; }
+.skill-tag.cat-data { background: rgba(255,107,157,0.08); border-color: rgba(255,107,157,0.25); color: #ffb3cc; }
+.skill-tag.cat-cloud { background: rgba(245,158,11,0.08); border-color: rgba(245,158,11,0.25); color: #fcd34d; }
+.skill-tag.cat-soft { background: rgba(34,197,94,0.08); border-color: rgba(34,197,94,0.25); color: #86efac; }
+.no-data { color: var(--muted); font-size: 0.85rem; font-style: italic; }
+
+/* Job matches */
+.job-match-item {
+  border: 1px solid var(--border); border-radius: 12px; padding: 16px;
+  margin-bottom: 12px; transition: border-color 0.2s;
+}
+.job-match-item:hover { border-color: var(--accent); }
+.job-match-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+.job-role-name { font-family: 'Syne', sans-serif; font-size: 0.95rem; font-weight: 700; }
+.job-pct { font-family: 'Syne', sans-serif; font-size: 1.2rem; font-weight: 800; }
+.job-bar-bg { height: 6px; background: var(--surface2); border-radius: 3px; overflow: hidden; margin-bottom: 8px; }
+.job-bar-fill { height: 100%; border-radius: 3px; transition: width 1s ease 0.5s; }
+.job-meta { display: flex; gap: 12px; flex-wrap: wrap; }
+.fit-badge {
+  padding: 2px 10px; border-radius: 100px; font-size: 0.72rem; font-weight: 600;
+}
+.job-desc { font-size: 0.78rem; color: var(--muted); margin-top: 6px; }
+
+/* Suggestions */
+.suggestion-item {
+  display: flex; gap: 12px; padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+}
+.suggestion-item:last-child { border-bottom: none; }
+.suggestion-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--accent); margin-top: 6px; flex-shrink: 0;
+}
+.suggestion-text { font-size: 0.875rem; color: var(--text); line-height: 1.5; }
+
+/* Keywords */
+.keyword-section { margin-bottom: 18px; }
+.keyword-section-title { font-size: 0.75rem; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 1px; margin-bottom: 10px; }
+.kw-good .keyword-section-title { color: var(--success); }
+.kw-missing .keyword-section-title { color: var(--danger); }
+.kw-overused .keyword-section-title { color: var(--warning); }
+.kw-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.kw-tag { padding: 3px 10px; border-radius: 6px; font-size: 0.75rem; font-weight: 500; }
+.kw-good .kw-tag { background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.25); color: #86efac; }
+.kw-missing .kw-tag { background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.25); color: #fca5a5; }
+.kw-overused .kw-tag { background: rgba(245,158,11,0.1); border: 1px solid rgba(245,158,11,0.25); color: #fcd34d; }
+
+/* Skill gap */
+.gap-role { margin-bottom: 20px; }
+.gap-role-name { font-family: 'Syne', sans-serif; font-size: 0.9rem; font-weight: 700; margin-bottom: 8px; color: var(--text); }
+.gap-skills { display: flex; flex-wrap: wrap; gap: 6px; }
+.gap-tag { padding: 3px 10px; border-radius: 6px; font-size: 0.75rem; font-weight: 500;
+  background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.25); color: #fca5a5; }
+
+/* Responsive */
+@media (max-width: 768px) {
+  .ats-hero { grid-template-columns: 1fr; text-align: center; }
+  .score-ring { margin: 0 auto; }
+  .two-col { grid-template-columns: 1fr; }
+  .profile-grid { grid-template-columns: 1fr; }
+  .score-breakdown { grid-template-columns: 1fr 1fr; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <nav>
+    <div class="logo">Resume<span>IQ</span></div>
+    <div class="nav-actions">
+      <a href="/" class="btn-ghost">← Upload New</a>
+      <a href="/dashboard/{{ result.id }}" class="btn-primary">📊 Dashboard</a>
+    </div>
+  </nav>
+
+  <div class="page-header">
+    <div class="breadcrumb"><a href="/">Home</a> → Analysis Results</div>
+    <div class="page-title">Resume Analysis Complete</div>
+    <div class="page-sub">{{ result.filename }} · {{ result.parsed.word_count }} words detected</div>
+  </div>
+
+  <!-- ATS SCORE HERO -->
+  {% set ats = result.ats %}
+  <div class="ats-hero">
+    <div class="score-ring">
+      <svg width="140" height="140" viewBox="0 0 140 140">
+        <circle class="score-ring-bg" cx="70" cy="70" r="60"/>
+        <circle class="score-ring-fill" id="scoreCircle" cx="70" cy="70" r="60"
+          stroke="{{ ats.grade_color }}"
+          stroke-dasharray="376.99"
+          stroke-dashoffset="376.99"/>
+      </svg>
+      <div class="score-ring-text">
+        <span class="score-number" style="color:{{ ats.grade_color }}">{{ ats.total_score }}</span>
+        <span class="score-label">ATS Score</span>
+      </div>
+    </div>
+    <div class="ats-details">
+      <h2>ATS Compatibility</h2>
+      <div class="grade-badge" style="background:{{ ats.grade_color }}22; color:{{ ats.grade_color }}; border:1px solid {{ ats.grade_color }}44">
+        Grade {{ ats.grade }}
+      </div>
+      <p class="ats-summary">{{ ats.summary }}</p>
+      <div class="score-breakdown">
+        {% for key, item in ats.breakdown.items() %}
+        <div class="score-item">
+          <div class="score-item-label">{{ item.label }}</div>
+          <div class="score-item-bar">
+            <div class="score-item-fill" style="width:{{ item.percentage }}%; background:{{ ats.grade_color }}"></div>
+          </div>
+          <div class="score-item-val" style="color:{{ ats.grade_color }}">{{ item.score }}/{{ item.max }}</div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  <!-- ROW 1: Profile + Skills -->
+  <div class="two-col">
+    <!-- Parsed Profile -->
+    <div class="card">
+      <div class="card-header">
+        <span class="card-icon">👤</span>
+        <span class="card-title">Parsed Profile</span>
+      </div>
+      <div class="profile-grid">
+        <div class="profile-item">
+          <div class="profile-key">Name</div>
+          <div class="profile-val {% if result.parsed.name == 'Not Found' %}missing{% endif %}">{{ result.parsed.name }}</div>
+        </div>
+        <div class="profile-item">
+          <div class="profile-key">Email</div>
+          <div class="profile-val {% if not result.parsed.email %}missing{% endif %}">{{ result.parsed.email or '—' }}</div>
+        </div>
+        <div class="profile-item">
+          <div class="profile-key">Phone</div>
+          <div class="profile-val {% if not result.parsed.phone %}missing{% endif %}">{{ result.parsed.phone or '—' }}</div>
+        </div>
+        <div class="profile-item">
+          <div class="profile-key">LinkedIn</div>
+          <div class="profile-val {% if not result.parsed.linkedin %}missing{% endif %}">{{ result.parsed.linkedin or '—' }}</div>
+        </div>
+        <div class="profile-item">
+          <div class="profile-key">GitHub</div>
+          <div class="profile-val {% if not result.parsed.github %}missing{% endif %}">{{ result.parsed.github or '—' }}</div>
+        </div>
+        <div class="profile-item">
+          <div class="profile-key">Sections Found</div>
+          <div class="profile-val">{{ result.parsed.sections_found | join(', ') | title or '—' }}</div>
+        </div>
+      </div>
+      {% if result.parsed.education %}
+      <hr style="border:none; border-top:1px solid var(--border); margin: 16px 0">
+      <div class="card-header" style="margin-bottom:10px">
+        <span class="card-icon">🎓</span><span class="card-title">Education</span>
+      </div>
+      {% for edu in result.parsed.education %}
+      <div style="font-size:0.82rem; color:var(--muted); padding: 3px 0">{{ edu }}</div>
+      {% endfor %}
+      {% endif %}
+    </div>
+
+    <!-- Skills -->
+    <div class="card">
+      <div class="card-header">
+        <span class="card-icon">⚡</span>
+        <span class="card-title">Detected Skills</span>
+        <span class="card-badge">{{ result.parsed.flat_skills | length }} total</span>
+      </div>
+      {% if result.parsed.skills %}
+        {% for category, skills in result.parsed.skills.items() %}
+        <div class="skill-category">
+          <div class="skill-cat-label">{{ category.replace('_', ' ').title() }}</div>
+          <div class="skill-tags">
+            {% set cat_class = {'web_frontend':'cat-web','web_backend':'cat-web','data_ml':'cat-data','cloud_devops':'cat-cloud','soft_skills':'cat-soft'} %}
+            {% for skill in skills %}
+            <span class="skill-tag {{ cat_class.get(category, '') }}">{{ skill }}</span>
+            {% endfor %}
+          </div>
+        </div>
+        {% endfor %}
+      {% else %}
+        <p class="no-data">No skills detected. Make sure your resume includes a dedicated Skills section.</p>
+      {% endif %}
+    </div>
+  </div>
+
+  <!-- ROW 2: Job Matches (full width) -->
+  <div class="one-col">
+    <div class="card">
+      <div class="card-header">
+        <span class="card-icon">💼</span>
+        <span class="card-title">Job Role Matches</span>
+        <span class="card-badge">{{ result.job_matches | length }} roles</span>
+      </div>
+      <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(300px,1fr)); gap:12px">
+        {% for match in result.job_matches %}
+        <div class="job-match-item">
+          <div class="job-match-top">
+            <span class="job-role-name">{{ match.role }}</span>
+            <span class="job-pct" style="color:{{ match.fit_color }}">{{ match.match_percentage }}%</span>
+          </div>
+          <div class="job-bar-bg">
+            <div class="job-bar-fill job-bar-anim" style="width:0%; background:{{ match.fit_color }}" data-pct="{{ match.match_percentage }}"></div>
+          </div>
+          <div class="job-meta">
+            <span class="fit-badge" style="background:{{ match.fit_color }}22; color:{{ match.fit_color }}; border:1px solid {{ match.fit_color }}44">{{ match.fit_label }}</span>
+            <span style="font-size:0.72rem; color:var(--muted)">Skills: {{ match.skill_match }}%</span>
+            <span style="font-size:0.72rem; color:var(--muted)">Keywords: {{ match.keyword_match }}%</span>
+          </div>
+          {% if match.missing_required %}
+          <div style="margin-top:8px">
+            <span style="font-size:0.7rem; color:var(--danger); text-transform:uppercase; letter-spacing:0.5px; font-weight:600">Missing Required Skills: </span>
+            <span style="font-size:0.75rem; color:var(--muted)">{{ match.missing_required[:5] | join(', ') }}</span>
+          </div>
+          {% endif %}
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  <!-- ROW 3: Suggestions + Keywords -->
+  <div class="two-col">
+    <!-- Improvement Suggestions -->
+    <div class="card">
+      <div class="card-header">
+        <span class="card-icon">💡</span>
+        <span class="card-title">Improvement Suggestions</span>
+        <span class="card-badge">{{ result.ats.suggestions | length }}</span>
+      </div>
+      {% if result.ats.suggestions %}
+        {% for tip in result.ats.suggestions %}
+        <div class="suggestion-item">
+          <div class="suggestion-dot"></div>
+          <div class="suggestion-text">{{ tip }}</div>
+        </div>
+        {% endfor %}
+      {% else %}
+        <p style="color:var(--success); font-size:0.875rem">🎉 Great job! No major issues found.</p>
+      {% endif %}
+    </div>
+
+    <!-- Keyword Analysis -->
+    <div class="card">
+      <div class="card-header">
+        <span class="card-icon">🔑</span>
+        <span class="card-title">Keyword Analysis</span>
+      </div>
+      <div class="keyword-section kw-good">
+        <div class="keyword-section-title">✅ Detected Skills & Keywords</div>
+        <div class="kw-tags">
+          {% for kw in result.keywords.good_keywords %}
+          <span class="kw-tag">{{ kw }}</span>
+          {% endfor %}
+        </div>
+      </div>
+      <div class="keyword-section kw-missing">
+        <div class="keyword-section-title">❌ Missing Keywords</div>
+        <div class="kw-tags">
+          {% for kw in result.keywords.missing_keywords %}
+          <span class="kw-tag">{{ kw }}</span>
+          {% endfor %}
+        </div>
+      </div>
+      {% if result.keywords.overused_words %}
+      <div class="keyword-section kw-overused">
+        <div class="keyword-section-title">⚠️ Overused Words</div>
+        <div class="kw-tags">
+          {% for kw in result.keywords.overused_words %}
+          <span class="kw-tag">{{ kw }}</span>
+          {% endfor %}
+        </div>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+
+  <!-- ROW 4: Skill Gap Analysis -->
+  <div class="one-col">
+    <div class="card">
+      <div class="card-header">
+        <span class="card-icon">📋</span>
+        <span class="card-title">Skill Gap Analysis — Top Roles</span>
+      </div>
+      <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(260px,1fr)); gap:16px">
+        {% for match in result.job_matches[:4] %}
+        <div class="gap-role">
+          <div class="gap-role-name">{{ match.role }}</div>
+          {% if match.matched_skills %}
+          <div style="margin-bottom:8px">
+            <div style="font-size:0.7rem; color:var(--success); text-transform:uppercase; letter-spacing:0.5px; font-weight:600; margin-bottom:4px">✅ You Have</div>
+            <div class="gap-skills">
+              {% for skill in match.matched_skills[:5] %}
+              <span style="padding:2px 8px; border-radius:6px; font-size:0.72rem; background:rgba(34,197,94,0.1); border:1px solid rgba(34,197,94,0.25); color:#86efac">{{ skill }}</span>
+              {% endfor %}
+            </div>
+          </div>
+          {% endif %}
+          {% if match.missing_required %}
+          <div>
+            <div style="font-size:0.7rem; color:var(--danger); text-transform:uppercase; letter-spacing:0.5px; font-weight:600; margin-bottom:4px">❌ Missing Required</div>
+            <div class="gap-skills">
+              {% for skill in match.missing_required[:6] %}
+              <span class="gap-tag">{{ skill }}</span>
+              {% endfor %}
+            </div>
+          </div>
+          {% endif %}
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  <!-- Experience & Projects -->
+  {% if result.parsed.experience or result.parsed.projects %}
+  <div class="two-col" style="margin-bottom:40px">
+    {% if result.parsed.experience %}
+    <div class="card">
+      <div class="card-header">
+        <span class="card-icon">💼</span>
+        <span class="card-title">Experience Entries</span>
+      </div>
+      {% for line in result.parsed.experience[:8] %}
+      <div style="font-size:0.82rem; color:var(--muted); padding:4px 0; border-bottom:1px solid var(--border)">{{ line }}</div>
+      {% endfor %}
+    </div>
+    {% endif %}
+    {% if result.parsed.projects or result.parsed.certifications %}
+    <div class="card">
+      {% if result.parsed.projects %}
+      <div class="card-header">
+        <span class="card-icon">🚀</span>
+        <span class="card-title">Projects</span>
+      </div>
+      {% for proj in result.parsed.projects %}
+      <div style="font-size:0.82rem; color:var(--muted); padding:4px 0; border-bottom:1px solid var(--border)">{{ proj }}</div>
+      {% endfor %}
+      {% endif %}
+      {% if result.parsed.certifications %}
+      <div class="card-header" style="margin-top:16px">
+        <span class="card-icon">🏆</span>
+        <span class="card-title">Certifications</span>
+      </div>
+      {% for cert in result.parsed.certifications %}
+      <div style="font-size:0.82rem; color:var(--muted); padding:4px 0; border-bottom:1px solid var(--border)">{{ cert }}</div>
+      {% endfor %}
+      {% endif %}
+    </div>
+    {% endif %}
+  </div>
+  {% endif %}
+
+  <div style="text-align:center; padding: 20px 0 48px">
+    <a href="/dashboard/{{ result.id }}" class="btn-primary" style="padding:12px 28px; font-size:0.95rem">
+      📊 View Full Analytics Dashboard →
+    </a>
+  </div>
+</div>
+
+<script>
+// Animate ATS score ring on load
+window.addEventListener('DOMContentLoaded', () => {
+  const score = {{ ats.total_score }};
+  const circumference = 2 * Math.PI * 60;
+  const offset = circumference - (score / 100) * circumference;
+  setTimeout(() => {
+    document.getElementById('scoreCircle').style.strokeDashoffset = offset;
+  }, 200);
+
+  // Animate job match bars
+  setTimeout(() => {
+    document.querySelectorAll('.job-bar-anim').forEach(bar => {
+      bar.style.transition = 'width 1s ease';
+      bar.style.width = bar.dataset.pct + '%';
+    });
+    // Animate score breakdown bars
+    document.querySelectorAll('.score-item-fill').forEach(bar => {
+      // width is already set via inline style with transition
+    });
+  }, 400);
+});
+</script>
+</body>
+</html>

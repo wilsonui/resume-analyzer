@@ -1,0 +1,60 @@
+Arjun Mehta
+arjun.mehta@gmail.com | +91-9876543210 | linkedin.com/in/arjunmehta | github.com/arjunmehta
+
+SUMMARY
+Motivated Computer Engineering student with hands-on experience in full-stack development and machine learning. Passionate about building scalable web applications and AI-powered solutions. Seeking an internship or entry-level role in Software Development or Machine Learning Engineering.
+
+EDUCATION
+Bachelor of Engineering in Computer Engineering
+Pune Institute of Computer Technology, Pune
+2020 – 2024 | CGPA: 8.4/10
+
+12th Grade — Maharashtra State Board | 2020 | 88.6%
+10th Grade — Maharashtra State Board | 2018 | 91.2%
+
+SKILLS
+Programming Languages: Python, JavaScript, Java, C++, SQL
+Web Technologies: React, Node.js, Express, HTML, CSS, Bootstrap, REST API
+Machine Learning: Scikit-learn, Pandas, NumPy, Matplotlib, TensorFlow
+Databases: MySQL, MongoDB, PostgreSQL, SQLite
+Tools & DevOps: Git, GitHub, Docker, Linux, VS Code, Postman
+Soft Skills: Problem Solving, Teamwork, Communication, Leadership
+
+EXPERIENCE
+Full Stack Developer Intern — TechNova Pvt Ltd, Pune (June 2023 – August 2023)
+- Developed a React-based admin dashboard that improved data visualization for 200+ clients
+- Built 15+ RESTful API endpoints using Node.js and Express, reducing response time by 40%
+- Integrated JWT authentication and role-based access control for security
+- Collaborated with a team of 5 engineers using Agile/Scrum methodology
+
+Machine Learning Intern — DataMinds Analytics (January 2023 – March 2023)
+- Built a customer churn prediction model using Scikit-learn achieving 87% accuracy
+- Performed feature engineering and EDA on a dataset of 50,000+ records
+- Deployed model using Flask API consumed by the frontend team
+- Reduced model inference time by 25% through optimization
+
+PROJECTS
+Smart Attendance System using Face Recognition
+- Implemented real-time face detection using OpenCV and DeepFace library
+- Achieved 94% detection accuracy with 200ms average response time
+- Built admin dashboard with React for viewing attendance logs
+
+E-Commerce Platform with Recommendation Engine
+- Built full-stack e-commerce site using React, Node.js, and MongoDB
+- Implemented collaborative filtering recommendation system improving CTR by 18%
+- Deployed on AWS EC2 with Nginx reverse proxy; handled 500+ concurrent users
+
+Resume Keyword Analyzer (NLP)
+- Developed NLP-based tool to extract skills, keywords, and ATS score from resumes
+- Used Python, spaCy, Flask for backend; React for frontend
+
+CERTIFICATIONS
+- Google Data Analytics Professional Certificate — Coursera (2023)
+- AWS Cloud Practitioner Essentials — AWS Training (2023)
+- Deep Learning Specialization — Andrew Ng, Coursera (2022)
+- React Developer Certificate — Udemy (2022)
+
+ACHIEVEMENTS
+- Winner, HackPITC 2023 — Built AI-based healthcare triage system in 24 hours
+- Top 5%, National Coding Challenge by HackerEarth (2023)
+- Published paper on "Efficient Face Recognition using Lightweight CNNs" — IJCSE Journal
