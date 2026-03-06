@@ -227,6 +227,194 @@ JOB_ROLES = {
             "incident response", "penetration testing", "vulnerability",
             "security audit", "access control", "encryption"
         ]
+    },"Marketing Manager": {
+        "description": """Develop and execute marketing strategies to drive brand awareness and growth.
+        Manage campaigns, analyze performance metrics, and lead marketing teams.""",
+        "required_skills": [
+            "marketing strategy", "seo", "sem", "google analytics", "social media",
+            "content marketing", "email marketing", "crm", "communication",
+            "project management", "data analysis", "leadership"
+        ],
+        "nice_to_have": [
+            "hubspot", "salesforce", "mailchimp", "adobe creative suite",
+            "a/b testing", "paid advertising", "copywriting", "branding"
+        ],
+        "keywords": [
+            "campaign management", "brand awareness", "lead generation",
+            "digital marketing", "roi", "marketing funnel", "customer acquisition",
+            "market research", "content strategy", "kpi"
+        ]
+    },
+
+    "Financial Analyst": {
+        "description": """Analyze financial data to support business decisions.
+        Build financial models, forecasts, and reports for stakeholders.""",
+        "required_skills": [
+            "financial modeling", "excel", "accounting", "budgeting",
+            "forecasting", "data analysis", "sql", "reporting",
+            "communication", "problem solving", "statistics"
+        ],
+        "nice_to_have": [
+            "python", "tableau", "power bi", "bloomberg", "quickbooks",
+            "sap", "valuation", "investment analysis", "risk management"
+        ],
+        "keywords": [
+            "financial analysis", "budget", "forecast", "variance analysis",
+            "p&l", "cash flow", "revenue", "financial reporting",
+            "investment", "roi", "balance sheet", "income statement"
+        ]
+    },
+
+    "Human Resources Manager": {
+        "description": """Oversee recruitment, employee relations, performance management,
+        and HR policies. Foster a positive workplace culture and ensure compliance.""",
+        "required_skills": [
+            "recruitment", "employee relations", "performance management",
+            "hr policies", "onboarding", "communication", "leadership",
+            "conflict resolution", "compliance", "training", "payroll"
+        ],
+        "nice_to_have": [
+            "workday", "sap hr", "bamboohr", "adp", "talent management",
+            "diversity and inclusion", "compensation", "organizational development"
+        ],
+        "keywords": [
+            "talent acquisition", "employee engagement", "workforce planning",
+            "hr strategy", "benefits administration", "succession planning",
+            "labor relations", "hr compliance", "culture", "retention"
+        ]
+    },
+
+    "UI/UX Designer": {
+        "description": """Design intuitive, beautiful user interfaces and experiences.
+        Conduct user research, create wireframes, prototypes, and work with developers.""",
+        "required_skills": [
+            "figma", "ui design", "ux design", "wireframing", "prototyping",
+            "user research", "usability testing", "adobe xd", "sketch",
+            "design systems", "typography", "color theory", "communication"
+        ],
+        "nice_to_have": [
+            "html", "css", "illustrator", "photoshop", "motion design",
+            "accessibility", "information architecture", "a/b testing"
+        ],
+        "keywords": [
+            "user experience", "user interface", "wireframe", "prototype",
+            "usability", "design thinking", "user journey", "interaction design",
+            "responsive design", "visual design", "user research"
+        ]
+    },
+
+    "Sales Manager": {
+        "description": """Lead sales teams to meet revenue targets. Build client relationships,
+        develop sales strategies, and manage the full sales pipeline.""",
+        "required_skills": [
+            "sales strategy", "crm", "salesforce", "negotiation", "communication",
+            "leadership", "pipeline management", "forecasting", "client relations",
+            "presentation", "problem solving", "time management"
+        ],
+        "nice_to_have": [
+            "hubspot", "zoho", "b2b sales", "b2c sales", "account management",
+            "cold calling", "business development", "market analysis"
+        ],
+        "keywords": [
+            "revenue growth", "sales target", "pipeline", "quota",
+            "client acquisition", "account management", "business development",
+            "sales funnel", "closing deals", "customer retention"
+        ]
+    },
+
+    "Project Manager": {
+        "description": """Plan, execute, and close projects on time and within budget.
+        Coordinate cross-functional teams, manage risks, and communicate with stakeholders.""",
+        "required_skills": [
+            "project management", "agile", "scrum", "stakeholder management",
+            "risk management", "budgeting", "communication", "leadership",
+            "planning", "jira", "ms project", "problem solving"
+        ],
+        "nice_to_have": [
+            "pmp certification", "prince2", "kanban", "confluence", "trello",
+            "resource management", "change management", "six sigma"
+        ],
+        "keywords": [
+            "project planning", "delivery", "milestones", "scope management",
+            "resource allocation", "risk mitigation", "cross-functional",
+            "stakeholder communication", "budget management", "timeline"
+        ]
+    },
+
+    "Content Writer": {
+        "description": """Create compelling written content for blogs, websites, social media,
+        and marketing materials. Research topics and tailor content for target audiences.""",
+        "required_skills": [
+            "writing", "editing", "seo", "research", "communication",
+            "content strategy", "social media", "blogging", "copywriting",
+            "grammar", "storytelling", "time management"
+        ],
+        "nice_to_have": [
+            "wordpress", "google analytics", "email marketing", "adobe creative suite",
+            "video scripting", "technical writing", "proofreading"
+        ],
+        "keywords": [
+            "content creation", "blog posts", "seo writing", "copywriting",
+            "editorial", "audience engagement", "brand voice", "content calendar",
+            "social media content", "web content"
+        ]
+    },
+
+    "Healthcare Professional": {
+        "description": """Provide patient care, diagnosis, and treatment in clinical settings.
+        Collaborate with medical teams and maintain accurate patient records.""",
+        "required_skills": [
+            "patient care", "clinical skills", "medical knowledge", "communication",
+            "empathy", "teamwork", "documentation", "medical terminology",
+            "emergency response", "compliance", "problem solving"
+        ],
+        "nice_to_have": [
+            "ehr systems", "epic", "research", "leadership", "training",
+            "public health", "telehealth", "medical coding"
+        ],
+        "keywords": [
+            "patient care", "diagnosis", "treatment", "clinical", "healthcare",
+            "medical", "nursing", "therapy", "rehabilitation", "health records",
+            "patient outcomes", "evidence-based"
+        ]
+    },
+
+    "Accountant": {
+        "description": """Manage financial records, prepare tax returns, and ensure
+        regulatory compliance. Analyze financial statements and support audits.""",
+        "required_skills": [
+            "accounting", "excel", "quickbooks", "tax preparation", "auditing",
+            "financial reporting", "bookkeeping", "compliance", "budgeting",
+            "communication", "attention to detail", "gaap"
+        ],
+        "nice_to_have": [
+            "sap", "oracle financials", "xero", "cpa certification",
+            "forensic accounting", "payroll", "cost accounting"
+        ],
+        "keywords": [
+            "financial statements", "general ledger", "accounts payable",
+            "accounts receivable", "tax", "audit", "reconciliation",
+            "journal entries", "balance sheet", "compliance", "gaap"
+        ]
+    },
+
+    "Graphic Designer": {
+        "description": """Create visual content for print and digital media.
+        Design logos, marketing materials, social media graphics, and brand identities.""",
+        "required_skills": [
+            "adobe illustrator", "photoshop", "indesign", "typography",
+            "color theory", "branding", "layout design", "creativity",
+            "communication", "attention to detail", "figma"
+        ],
+        "nice_to_have": [
+            "after effects", "premiere pro", "3d design", "motion graphics",
+            "ux design", "video editing", "print design", "web design"
+        ],
+        "keywords": [
+            "visual design", "branding", "logo design", "print design",
+            "digital design", "creative direction", "brand identity",
+            "illustration", "layout", "typography", "marketing materials"
+        ]
     }
 }
 
